@@ -10,5 +10,6 @@ Methodology of the project in brief -<br>
 •	ResNet50 architecture was used for training the model<br> 
 •	Validation accuracy obtained was approximately 99%<br> 
 •	OpenCV was used for taking in real-time hand gestures of the player<br>
-
+# Performance 
+![Training Performace](Performance.PNG)
 
