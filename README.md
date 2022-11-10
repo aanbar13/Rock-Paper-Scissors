@@ -8,7 +8,7 @@ The images were rotated 270 degrees prior to training using rotate.py<br>
 Methodology of the project in brief -<br>
 •	Data augmentation (horizontal and vertical flip, width and height shift, shear) was performed to pre-process data<br>
 •	20% data from the mentioned dataset was taken as validation data<br>
-•	Transfer learning approach was used for training and a pretrained ResNet50 architecture was used as the base layer. The model was fine-tuned with the collected dataset<br>  
+•	Transfer learning approach was used for training and a pretrained ResNet50 architecture was used as the base layer. The model was fine-tuned with the collected dataset<br>     
 •	Validation accuracy achieved was 99%<br> 
 •	OpenCV was used for taking in real-time hand gestures of the player<br> 
 •	The captured image was sent to the trained machine learning model to get the prediction<br> 
