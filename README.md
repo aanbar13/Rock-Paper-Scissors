@@ -15,5 +15,5 @@ Methodology of the project in brief -<br>
 ![Training Performace](Loss.PNG)   
 ![Training Performace](Accuracy_1.PNG) 
 # Let's Play! 
-For model development and performance, check the provided ResNet50_rock_paper_scissors_v4.ipynb file. Run the GUI_Rock_paper_scissor_final.py file with a functioning webcam plugged in. In the game window popped up, ‘Start’ button will start taking live feed and ‘Shoot’ button will make the bot play. To make sure the prediction from the live feed is as mentioned, noiseless/ monochrome background is a pre-requisite.<br>
+For model development and performance, check the provided ResNet50_rock_paper_scissors_v4_withlosscomparisongraph.ipynb file. Run the GUI_Rock_paper_scissor_final.py file with a functioning webcam plugged in. In the game window popped up, ‘Start’ button will start taking live feed and ‘Shoot’ button will make the bot play. To make sure the prediction from the live feed is as mentioned, noiseless/ monochrome background is a pre-requisite.<br>
 
