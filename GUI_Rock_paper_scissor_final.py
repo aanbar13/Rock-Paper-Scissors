@@ -6,7 +6,14 @@ import os
 import random 
 import tensorflow as tf
 from tensorflow.keras.models import load_model
-from keras.preprocessing import image
+from keras.preprocessing import image 
+import pygame
+from pygame.locals import *
+from pygame import mixer
+ 
+#to play the backgorund music 
+mixer.init()
+mixer.music.load('C:/Users/USER/Data_rock_paper_scissor_KAGGLE/mickey.mp3')
 
 #load the pretrained model
 model = load_model('RPS_detectionModel_v4.h5')
@@ -16,32 +23,25 @@ height = 100
 
 start_point = (300, 150)
 end_point = (500, 380)  
-# image_scissor_path = 'sample_scissor.png'
-# image_scissor_path = 'sample_rock.png'
-# image_scissor_path = 'sample_paper.png'
 image_mickey_path = 'sample.png'
 sample_images_path= "sample_images"
 files=os.listdir(sample_images_path)
 
-# dim = (400,500)
-# img_ai_read = Image.open(image_mickey_path)
-# img_ai_read = img_ai_read.resize(dim) 
-
 dim = (400,500)
 randomly_selected = Image.open(image_mickey_path)
 randomly_selected = randomly_selected.resize(dim)
-
+ 
+#for the user interface
 window=tkinter.Tk()
 window.title("Rock Paper Scissors")
 window.configure(background='white')
 
-
 frame=np.random.randint(0,255,[100,100,3],dtype='uint8')
 
-player_box1 = tkinter.Label(window) #,image=img)
+player_box1 = tkinter.Label(window)
 player_box1.grid(row=0,column=0,columnspan=3,pady=1,padx=10)
 
-player_box2=tkinter.Label(window) #,image=img)
+player_box2=tkinter.Label(window) 
 player_box2.grid(row=0,column=4,columnspan=3,pady=1,padx=100)
 player_box2.configure(background='white')
 
@@ -51,14 +51,12 @@ player_text.grid(row=1,column=1,pady=1,padx=10)
 player_text.configure(font=('Calibri', 25))
 player_text.configure(background='white')
 
-
 message="Mickey"
 mickey_text=tkinter.Label(window,text=message)
 mickey_text.grid(row=1,column=5,pady=1,padx=10)
 mickey_text.configure(font=('Calibri', 25))
 mickey_text.configure(background='white')
 
- 
 message=""
 mickey_counter=tkinter.Label(window,text=message)
 mickey_counter.grid(row=2,column=5,pady=1,padx=1)
@@ -74,7 +72,6 @@ player_counter.configure(font=('Calibri', 24))
 gif_label = tkinter.Label(window,image="")
 gif_label.grid(row=1,column=2,pady=1,padx=10,columnspan=3)
 gif_label.configure(background='white')
-# gif_label.pack()  
 
 message="------Score------"
 score_text=tkinter.Label(window,text=message)
@@ -84,21 +81,20 @@ score_text.configure(font=('Calibri', 20))
 
 cam = 1
 
-### for animation
-
+#for animation
 gif_file="countdown.gif"
 
 info = Image.open(gif_file)
 
 anim_frames = info.n_frames  # gives total number of frames that gif contains
 
-# creating list of PhotoImage objects for each frames
+#creating list of PhotoImage objects for each frames
 anim_im = [tkinter.PhotoImage(file=gif_file,format=f"gif -index {i}") for i in range(anim_frames)]
 
 anim_count = 0
 anim = None
 
-### score counter 
+#score counter 
 player_score = 0
 mickey_score = 0
 
@@ -108,15 +104,14 @@ def video_capture():
     global cam
     global randomly_selected
     cam = cv2.VideoCapture(0)
-    #cv2.namedWindow("Experience_in_AI camera")
-    while True:
-        # key = cv2.waitKey(1) & 0xFF
+    mixer.music.play(-1) #for the background music to play in loop
+    while True:  
         ret, frame = cam.read()
         frame = cv2.flip(frame, 1)
        
         cv2.rectangle(frame, start_point, end_point, (0, 255, 0), 2)
         
-        #Update the image to tkinter...
+        #Update the image to tkinter
         frame_=cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
         img_update = ImageTk.PhotoImage(Image.fromarray(frame_))
         player_box1.configure(image=img_update)
@@ -149,7 +144,6 @@ def player_choice_predict():
     pred_label = label_dict[dict_key]
     player_text.configure(text = pred_label)
     
-    
     return pred_label
 
 def mickey_choice():  
@@ -166,13 +160,7 @@ def mickey_choice():
     randomly_selected_rps_name = randomly_selected_path.strip(".png").split('_')[1]
     mickey_text.configure(text=randomly_selected_rps_name)
    
-    
     return randomly_selected_rps_name
-    
-    # global cam
-    # cam.release()
-    # cv2.destroyAllWindows()
-    # print("Stopped!")
     
 def animation(count):
     global anim_im
@@ -205,25 +193,24 @@ def animation(count):
         player_counter.configure(text = player_score)
         mickey_counter.configure(text = mickey_score)
         
-
+#button to start the live feed
 button1_height = 6
-button1 = tkinter.Button(window,text="Start",command=video_capture,height=5,width=20)
+button1 = tkinter.Button(window,text="Start",command=video_capture,height=5,width=20)   
 button1.grid(row=1,column=0,pady=10,padx=10)
 button1.config(height=1*button1_height,width=20)
 button1.configure(font=('Calibri', 14))
 button1.configure(background='green')
-
-
-button2_height = 6
-# button2 = tkinter.Button(window,text="Stop",command=video_capture_end,height=5,width=20)
-button2 = tkinter.Button(window,text="Shoot !!!",command=lambda :animation(anim_count),height=5,width=20)
+ 
+#button to make the bot play
+button2_height = 6 
+button2 = tkinter.Button(window,text="Shoot !!!",command=lambda :animation(anim_count),height=5,width=20) 
 button2.grid(row=1,column=6,pady=10,padx=10)
 button2.config(height=1*button1_height,width=20)
 button2.configure(font=('Calibri', 14))
 button2.configure(background='red')
-
-
+ 
 window.mainloop()
-
+ 
+mixer.music.stop()
 cam.release()
 cv2.destroyAllWindows()
